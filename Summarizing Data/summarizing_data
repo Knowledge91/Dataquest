@@ -1,18 +1,25 @@
+from __future__ import division
 import pandas as pd
+
 
 all_ages = pd.read_csv("college-majors/all-ages.csv")
 recent_grads = pd.read_csv("college-majors/recent-grads.csv")
 # print(all_ages.head(5))
 
-# summarize major categories
+# 3. summarize major categories
 # print(all_ages['Major_category'].value_counts().index)
-
 all_ages_major_categories = dict()
 recent_grads_major_categories = dict()
-
 # print(all_ages["Major_category"].value_counts().index[0])
 for categorie in all_ages["Major_category"].value_counts().index:
     # print(all_ages.loc[all_ages["Major_category"] == 'Engineering'][""])
     all_ages_major_categories[categorie] = all_ages.loc[all_ages["Major_category"] == categorie]["Total"].sum()
     recent_grads_major_categories[categorie] = recent_grads.loc[recent_grads["Major_category"] == categorie]["Total"].sum()
-    print(all_ages_major_categories)
+    # print(all_ages_major_categories)
+
+# 4. Low Wage Jobs Rates
+low_wage_percent = recent_grads["Low_wage_jobs"].sum()/recent_grads["Total"].sum()
+print(recent_grads["Low_wage_jobs"].sum())
+print(recent_grads["Total"].sum())
+print(low_wage_percent)
+
