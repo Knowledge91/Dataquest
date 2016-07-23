@@ -6,6 +6,7 @@ all_ages = pd.read_csv("college-majors/all-ages.csv")
 recent_grads = pd.read_csv("college-majors/recent-grads.csv")
 # print(all_ages.head(5))
 
+
 # 3. summarize major categories
 # print(all_ages['Major_category'].value_counts().index)
 all_ages_major_categories = dict()
@@ -17,9 +18,31 @@ for categorie in all_ages["Major_category"].value_counts().index:
     recent_grads_major_categories[categorie] = recent_grads.loc[recent_grads["Major_category"] == categorie]["Total"].sum()
     # print(all_ages_major_categories)
 
+
 # 4. Low Wage Jobs Rates
 low_wage_percent = recent_grads["Low_wage_jobs"].sum()/recent_grads["Total"].sum()
-print(recent_grads["Low_wage_jobs"].sum())
-print(recent_grads["Total"].sum())
-print(low_wage_percent)
+# print(recent_grads["Low_wage_jobs"].sum())
+# print(recent_grads["Total"].sum())
+# print(low_wage_percent)
 
+
+# 5: Comparing Datasets
+# All majors, common to both DataFrames
+majors = recent_grads['Major'].value_counts().index
+# print(len(majors))
+# print(len(all_ages["Major"]))
+
+recent_grads_lower_unemp_count = 0
+all_ages_lower_unemp_count = 0
+
+# print(all_ages.loc[all_ages["Major"] == "AEROSPACE ENGINEERING"]["Unemployment_rate"].values[0])
+for major in majors:
+    # print(major)
+    # print(recent_grads[recent_grads["Major"] == major]["Unemployment_rate"])
+    if all_ages[all_ages["Major"] == major]["Unemployment_rate"].values[0] > recent_grads[recent_grads["Major"] == major]["Unemployment_rate"].values[0]:
+        recent_grads_lower_unemp_count += 1
+    if all_ages[all_ages["Major"] == major]["Unemployment_rate"].values[0] < recent_grads[recent_grads["Major"] == major]["Unemployment_rate"].values[0]:
+        all_ages_lower_unemp_count +=1
+
+# print(recent_grads_lower_unemp_count)
+# print(all_ages_lower_unemp_count)
